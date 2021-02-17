@@ -1,6 +1,17 @@
 "use strict";
 
-let arr2d = new Array(2);
+let arr2d = [
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+];
 
 class Tile {
   constructor(element, style, styleClass, onclick) {

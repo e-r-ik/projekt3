@@ -41,5 +41,4 @@ function drawGame() {
   }
 }
 
-//fillArray();
 drawGame();

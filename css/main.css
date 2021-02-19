@@ -1,0 +1,17 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+#game {
+  width: 1000px;
+  height: 1000px;
+  display: grid;
+  grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+}
+
+.tileStyle {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+}

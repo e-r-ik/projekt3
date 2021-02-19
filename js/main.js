@@ -1,6 +1,7 @@
 "use strict";
 
-let arr2d = [
+let _gameCanvas = document.getElementById("game");
+let _arr2d = [
   [],
   [],
   [],
@@ -14,18 +15,31 @@ let arr2d = [
 ];
 
 class Tile {
-  constructor(element, style, styleClass, onclick) {
+  constructor(element, style, onclick) {
     this.element = element;
     this.style = style;
-    this.styleClass = styleClass;
     this.onclick = onclick;
   }
 }
 
-function startGame() {
-  for (var i = 0; i < array.length; i++) {
-    for (var j = 0; j < array.length; j++) {
-      arr2d[i, j] = new Tile("div")
+function drawGame() {
+  for (let i = 0; i < _arr2d.length; i++) {
+    for (let j = 0; j < _arr2d.length; j++) {
+
+      _arr2d[j][i] = new Tile(document.createElement("div"),
+                              document.createAttribute("class"),
+                              document.createAttribute("onclick"));
+
+      _arr2d[j][i].style.value = "tileStyle";
+      _arr2d[j][i].onclick.value = "console.log('du tryckte')";
+
+      _gameCanvas.appendChild(_arr2d[j][i].element);
+
+      _arr2d[j][i].element.setAttributeNode(_arr2d[j][i].style);
+      _arr2d[j][i].element.setAttributeNode(_arr2d[j][i].onclick);
     }
   }
 }
+
+//fillArray();
+drawGame();

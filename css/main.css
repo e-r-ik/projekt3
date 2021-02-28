@@ -2,16 +2,18 @@
   margin: 0;
   padding: 0;
 }
-#game {
-  width: 1000px;
-  height: 1000px;
+
+body {
+
+}
+
+main {
   display: grid;
-  grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+  grid-template: 15% repeat(10, 1fr) 15% / 15% repeat(10, 1fr) 15%;
 }
 
 .tileStyle {
-  display: flex;
-  width: 100px;
-  height: 100px;
+  height: 100%;
+  width: 100%;
   border: 1px solid black;
 }

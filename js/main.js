@@ -15,31 +15,41 @@ let arr2d = [
 ];
 
 class Tile {
-  constructor(element, style, onclick, isBoat) {
+  constructor(element, classattribute, onclick, style, isBoat) {
     this.element = element;
-    this.style = style;
+    this.classattribute = classattribute;
     this.onclick = onclick;
+    this.style = style;
     this.isboat = isBoat;
   }
 }
 
 function drawGame() {
+let n = 2;
   for (let i = 0; i < arr2d.length; i++) {
+    let o = 2;
     for (let j = 0; j < arr2d.length; j++) {
 
       arr2d[j][i] = new Tile(document.createElement("div"),
                              document.createAttribute("class"),
                              document.createAttribute("onclick"),
+                             document.createAttribute("style"),
                              false);
 
-      arr2d[j][i].style.value = "tileStyle";
+      arr2d[j][i].classattribute.value = "tileStyle";
       arr2d[j][i].onclick.value = "console.log('du tryckte')";
+      arr2d[j][i].style.value = "grid-row-start: " + n + "; grid-column-start: " + o;
 
       gameCanvas.appendChild(arr2d[j][i].element);
 
-      arr2d[j][i].element.setAttributeNode(arr2d[j][i].style);
+      arr2d[j][i].element.setAttributeNode(arr2d[j][i].classattribute);
       arr2d[j][i].element.setAttributeNode(arr2d[j][i].onclick);
+      arr2d[j][i].element.setAttributeNode(arr2d[j][i].style);
+
+      o++;
     }
+    o = 2;
+    n++;
   }
 }
 

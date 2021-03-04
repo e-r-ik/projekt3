@@ -7,13 +7,40 @@ body {
 
 }
 
+.shipTypeContainer {
+  grid-column: 2 / span 10;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+  margin-top: 2vw;
+  margin-bottom: 2vw;
+  border-radius: 1vw;
+  background-color: gray;
+}
+
+.shipType {
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  width: 100px;
+  height: 25px;
+  cursor: pointer;
+}
+
 main {
   display: grid;
-  grid-template: 15% repeat(10, 1fr) 15% / 15% repeat(10, 1fr) 15%;
+  grid-template: auto repeat(10, 1fr) auto / 35% repeat(10, 1fr) 35%;
 }
 
 .tileStyle {
-  height: 100%;
-  width: 100%;
+  height: 3vw;
+  width: 3vw;
   border: 1px solid black;
+}
+
+.tileStyle:hover {
+  background-color: gray;
 }

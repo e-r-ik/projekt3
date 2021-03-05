@@ -13,7 +13,7 @@ let arr2d = [
   [],
   [],
 ];
-let currentShipType = currentship();
+let currentShipType = 1;
 
 class Tile {
   constructor(element, classattribute, onclick, style, isBoat) {
@@ -38,7 +38,7 @@ let n = 2;
                              false);
 
       arr2d[j][i].classattribute.value = "tileStyle";
-      arr2d[j][i].onclick.value = "clickedTile()";
+      arr2d[j][i].onclick.value = "clickedTile(" + ")";
       arr2d[j][i].style.value = "grid-row-start: " + n + "; grid-column-start: " + o;
 
       gameCanvas.appendChild(arr2d[j][i].element);
@@ -58,8 +58,8 @@ function currentship(n) {
   return n;
 }
 
-clickedTile() {
-  
+clickedTile(o, p) {
+  arr2d[p][o].element.style.bordercolor = red;
 }
 
 drawGame();

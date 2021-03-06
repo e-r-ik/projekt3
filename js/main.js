@@ -1,18 +1,7 @@
 "use strict";
 
 let gameCanvas = document.getElementById("game");
-let arr2d = [
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-  [],
-];
+let arr = [];
 let currentShipType = 1;
 
 class Tile {
@@ -26,40 +15,42 @@ class Tile {
 }
 
 function drawGame() {
-let n = 2;
-  for (let i = 0; i < arr2d.length; i++) {
+  let n = 2;
+  let p = 0;
+  for (let i = 0; i < 10; i++) {
     let o = 2;
-    for (let j = 0; j < arr2d.length; j++) {
+    for (let j = 0; j < 10; j++) {
+      arr[p] = new Tile(document.createElement("div"),
+                        document.createAttribute("class"),
+                        document.createAttribute("onclick"),
+                        document.createAttribute("style"),
+                        false);
 
-      arr2d[j][i] = new Tile(document.createElement("div"),
-                             document.createAttribute("class"),
-                             document.createAttribute("onclick"),
-                             document.createAttribute("style"),
-                             false);
+      arr[p].classattribute.value = "tileStyle";
+      arr[p].onclick.value = "clickedTile(" + p + ")";
+      arr[p].style.value = "grid-row-start: " + n + "; grid-column-start: " + o + ";"
 
-      arr2d[j][i].classattribute.value = "tileStyle";
-      arr2d[j][i].onclick.value = "clickedTile(" + ")";
-      arr2d[j][i].style.value = "grid-row-start: " + n + "; grid-column-start: " + o;
+      gameCanvas.appendChild(arr[p].element);
 
-      gameCanvas.appendChild(arr2d[j][i].element);
-
-      arr2d[j][i].element.setAttributeNode(arr2d[j][i].classattribute);
-      arr2d[j][i].element.setAttributeNode(arr2d[j][i].onclick);
-      arr2d[j][i].element.setAttributeNode(arr2d[j][i].style);
-
+      arr[p].element.setAttributeNode(arr[p].classattribute);
+      arr[p].element.setAttributeNode(arr[p].onclick);
+      arr[p].element.setAttributeNode(arr[p].style);
       o++;
+      p++;
     }
-    o = 2;
+    o = 0;
     n++;
   }
 }
 
 function currentship(n) {
-  return n;
+  let otherShipTypes = document.querySelector("[shiptypecontainer]");
+  otherShipTypes.forEach(element => style.backgroundColor = "gray");  
+  document.getElementById(n).style.backgroundColor = "blue";
 }
 
-clickedTile(o, p) {
-  arr2d[p][o].element.style.bordercolor = red;
+function clickedTile(n) {
+  arr[n].element.style.borderColor = "red";
 }
 
 drawGame();

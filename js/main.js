@@ -44,8 +44,8 @@ function drawGame() {
 }
 
 function currentship(n) {
-  let otherShipTypes = document.querySelector("[shiptypecontainer]");
-  otherShipTypes.forEach(element => style.backgroundColor = "gray");  
+  let otherShipTypes = document.getElementsByClassName("shipType");
+  otherShipTypes.forEach(element => style.backgroundColor = "gray");
   document.getElementById(n).style.backgroundColor = "blue";
 }
 

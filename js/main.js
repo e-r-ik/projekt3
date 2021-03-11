@@ -55,8 +55,6 @@ function currentship(n) {
   currentShipType = n;
 }
 
-//en funktion som returnerar vilken knapp man har tryckt på
-
 function clickedTile(n) {
   arr[n].element.style.borderColor = "red";
   if (startPos == -1) {
@@ -64,11 +62,13 @@ function clickedTile(n) {
     return;
   }
   endPos = n;
-  console.log("startPos är " + startPos + " endpos är " + endPos);
+  console.log(Number(String(startPos).charAt(0)), Number(String(endPos).charAt(0)),
+              Number(String(startPos).charAt(1)), Number(String(endPos).charAt(1)));
   switch (currentShipType) {
     case 1:
       if (startPos == endPos) {
         arr[n].isBoat = true;
+        arr[n].element.style.backgroundColor = "blue";
         startPos = -1;
         endPos = -1;
       }
@@ -79,9 +79,30 @@ function clickedTile(n) {
       }
       break;
     case 2:
-      if (startPos.toString[1] - endPos.toString[1] == 2 ||
-          startPos.toString[1] - endPos.toString[1] == -2 ) {
-
+      if (Math.abs(nthDigit(endPos, 1) - nthDigit(startPos, 1)) === 1 &&
+          nthDigit(startPos, 0) === nthDigit(endPos, 0)) {
+            arr[startPos].isBoat = true;
+            arr[endPos].isBoat = true;
+            arr[startPos].element.style.backgroundColor = "blue";
+            arr[endPos].element.style.backgroundColor = "blue";
+            startPos = -1;
+            endPos = -1;
+            console.log("många trevligt")
+      }
+      else if (Math.abs(nthDigit(endPos, 0) - nthDigit(startPos, 0)) === 1 &&
+               nthDigit(startPos, 1) === nthDigit(endPos, 1)) {
+                 arr[startPos].isBoat = true;
+                 arr[endPos].isBoat = true;
+                 arr[startPos].element.style.backgroundColor = "blue";
+                 arr[endPos].element.style.backgroundColor = "blue";
+                 startPos = -1;
+                 endPos = -1;
+                 console.log("många trevligt")
+      }
+      else {
+        alert("Inte giltig skeppdesign testa igen");
+        startPos = -1;
+        endPos = -1;
       }
       break;
     case 3:
@@ -97,3 +118,7 @@ function clickedTile(n) {
 }
 
 drawGame();
+
+function nthDigit(n, o) {
+  return Number(String(n).charAt(o));
+}

@@ -2,7 +2,7 @@
 
 let gameCanvas = document.getElementById("game");
 let arr = [];
-let currentShipType = 1;
+let currentShipType = 0;
 let startPos = -1;
 let endPos = -1;
 
@@ -47,7 +47,7 @@ function drawGame() {
 
 function currentship(n) {
   posReset();
-  for (let i = 1; i < 5; i++) {
+  for (let i = 0; i < 4; i++) {
     document.getElementById(i).style.backgroundColor = "gray";
   }
   document.getElementById(n).style.backgroundColor = "red";
@@ -64,12 +64,18 @@ function clickedTile(n) {
   console.log(Number(String(startPos).charAt(0)), Number(String(endPos).charAt(0)),
               Number(String(startPos).charAt(1)), Number(String(endPos).charAt(1)));
 
-  if (nthDigit(endPos, 0) === nthDigit(startPos, 0) &&
-      Math.abs(nthDigit(endPos, 1) - nthDigit(startPos, 1)) === currentShipType) {
-    for (let i = 0; i < currentShipType; i++) {
+  if (isLegalPlacement()) {
+    for (let i = 0; i <= currentShipType; i++) {
       changeTile(startPos + i);
     }
     posReset();
+  }
+  else if (nthDigit(endPos, 1) === nthDigit(startPos, 1) &&
+           Math.abs(nthDigit(endPos, 0) - nthDigit(startPos, 0)) === currentShipType) {
+             for (let i = 0; i <= currentShipType; i++) {
+               changeTile(startPos + i * 10);
+             }
+             posReset();
   }
   else {
     alert("Inte giltig skeppdesign testa igen");
@@ -81,6 +87,11 @@ drawGame();
 
 function nthDigit(n, o) {
   return Number(String(n).charAt(o));
+}
+
+function isLegalPlacement(n) {
+  return nthDigit(endPos, 0) === nthDigit(startPos, 0) &&
+         Math.abs(nthDigit(endPos, 1) - nthDigit(startPos, 1)) === currentShipType;
 }
 
 function changeTile(iteration) {

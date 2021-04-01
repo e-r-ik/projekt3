@@ -64,14 +64,13 @@ function clickedTile(n) {
   console.log(Number(String(startPos).charAt(0)), Number(String(endPos).charAt(0)),
               Number(String(startPos).charAt(1)), Number(String(endPos).charAt(1)));
 
-  if (isLegalPlacement()) {
+  if (isLegalPlacement(0, 1)) {
     for (let i = 0; i <= currentShipType; i++) {
       changeTile(startPos + i);
     }
     posReset();
   }
-  else if (nthDigit(endPos, 1) === nthDigit(startPos, 1) &&
-           Math.abs(nthDigit(endPos, 0) - nthDigit(startPos, 0)) === currentShipType) {
+  else if (isLegalPlacement(1, 0)) {
              for (let i = 0; i <= currentShipType; i++) {
                changeTile(startPos + i * 10);
              }
@@ -89,9 +88,9 @@ function nthDigit(n, o) {
   return Number(String(n).charAt(o));
 }
 
-function isLegalPlacement(n) {
-  return nthDigit(endPos, 0) === nthDigit(startPos, 0) &&
-         Math.abs(nthDigit(endPos, 1) - nthDigit(startPos, 1)) === currentShipType;
+function isLegalPlacement(n, o) {
+  return nthDigit(endPos, n) === nthDigit(startPos, n) &&
+         Math.abs(nthDigit(endPos, o) - nthDigit(startPos, o)) === currentShipType;
 }
 
 function changeTile(iteration) {

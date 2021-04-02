@@ -5,6 +5,7 @@ let arr = [];
 let currentShipType = 0;
 let startPos = -1;
 let endPos = -1;
+let operator = 1;
 
 class Tile {
   constructor(element, classattribute, onclick, style, isBoat) {
@@ -64,22 +65,44 @@ function clickedTile(n) {
   console.log(Number(String(startPos).charAt(0)), Number(String(endPos).charAt(0)),
               Number(String(startPos).charAt(1)), Number(String(endPos).charAt(1)));
 
-  if (isLegalPlacement(0, 1)) {
+  if (nthDigit(startPos, 1) > nthDigit(endPos, 1) || nthDigit(startPos, 0) > nthDigit(endPos, 0)) {
+    operator = -1;
+  }
+
+  if (isLegalPlacement(0, 1) && operator == 1) {
     for (let i = 0; i <= currentShipType; i++) {
       changeTile(startPos + i);
     }
     posReset();
   }
-  else if (isLegalPlacement(1, 0)) {
-             for (let i = 0; i <= currentShipType; i++) {
-               changeTile(startPos + i * 10);
-             }
-             posReset();
+
+  else if (isLegalPlacement(1, 0) && operator == 1) {
+    for (let i = 0; i <= currentShipType; i++) {
+      changeTile(startPos + i * 10 * operator);
+    }
+    posReset();
   }
+
+  else if (isLegalPlacement(0, 1) && operator == -1) {
+    for (let i = 0; i <= currentShipType; i++) {
+      changeTile(startPos + i * operator);
+    }
+    posReset();
+  }
+
+  else if (isLegalPlacement(1, 0) && operator == -1) {
+    for (let i = 0; i <= currentShipType; i++) {
+      changeTile(startPos + i * 10 * operator);
+    }
+    posReset();
+  }
+
   else {
     alert("Inte giltig skeppdesign testa igen");
     posReset();
   }
+
+  operator = 1;
 }
 
 drawGame();

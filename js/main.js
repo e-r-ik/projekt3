@@ -9,7 +9,7 @@ let shipType3 = 2
 let shipType4 = 1;
 let startPos = -1;
 let endPos = -1;
-let operator = 1;
+let direction = 1;
 
 class Tile {
   constructor(element, classattribute, onclick, style, isBoat) {
@@ -60,9 +60,6 @@ function currentship(n) {
 }
 
 function clickedTile(n) {
-  if (true) {
-
-  }
   arr[n].element.style.borderColor = "red";
   if (startPos == -1) {
     startPos = n;
@@ -73,77 +70,83 @@ function clickedTile(n) {
               Number(String(startPos).charAt(1)), Number(String(endPos).charAt(1)));
 
   if (nthDigit(startPos, 1) > nthDigit(endPos, 1) || nthDigit(startPos, 0) > nthDigit(endPos, 0)) {
-    operator = -1;
+    direction = -1;
   }
 
-  if (startPos < 10 && endPos < 10 && operator == 1) {
-    for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i);
-    }
-    posReset();
-  }
-
-  else if (startPos < 10 && endPos < 10 && operator == -1) {
-    for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i * operator);
-    }
-    posReset();
-  }
-
-  else if (isLegalPlacement(0, 1) && operator == 1) {
-    for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i);
-    }
-    posReset();
-  }
-
-  else if (isLegalPlacement(1, 0) && operator == 1) {
-    for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i * 10 * operator);
-    }
-    posReset();
-  }
-
-  else if (isLegalPlacement(0, 1) && operator == -1) {
-    for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i * operator);
-    }
-    posReset();
-  }
-
-  else if (isLegalPlacement(1, 0) && operator == -1) {
-    for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i * 10 * operator);
-    }
-    posReset();
-  }
-
-  else {
-    alert("Inte giltig skeppdesign testa igen");
-    posReset();
-  }
-
-  operator = 1;
-  //lägg till funktion för att minska antalet kvarvarande båtar för respektive typ
   switch (currentShipType) {
+    case 0:
+      if (shipType1 > 0) {
+        drawShips();
+        shipType1--;
+      }
+      else {
+        alert("Slut på denna skepptyp");
+        posReset();
+      }
+        break;
     case 1:
-      shipType1--;
+      if (shipType2 > 0) {
+        drawShips();
+        shipType2--;
+      }
+      else {
+        alert("Slut på denna skepptyp");
+        posReset();
+      }
       break;
     case 2:
-      shipType2--;
+      if (shipType3 > 0) {
+        drawShips();
+        shipType3--;
+      }
+      else {
+        alert("Slut på denna skepptyp");
+        posReset();
+      }
       break;
     case 3:
-      shipType3--;
-      break;
-    case 4:
-      shipType4--;
+      if (shipType4 > 0) {
+        drawShips();
+        shipType4--;
+      }
+      else {
+        alert("Slut på denna skepptyp");
+        posReset();
+      }
       break;
     default:
       break;
   }
+
+  direction = 1;
 }
 
 drawGame();
+
+function drawShips() {
+  if (startPos < 10 && endPos < 10) {
+    for (let i = 0; i <= currentShipType; i++) {
+      changeTile(startPos + i * direction);
+    }
+  }
+
+  else if (isLegalPlacement(0, 1)) {
+    for (let i = 0; i <= currentShipType; i++) {
+      changeTile(startPos + i * direction);
+    }
+  }
+
+  else if (isLegalPlacement(1, 0)) {
+    for (let i = 0; i <= currentShipType; i++) {
+      changeTile(startPos + i * 10 * direction);
+    }
+  }
+
+  else {
+    alert("Inte giltig skeppdesign testa igen");
+  }
+  posReset();
+}
 
 function nthDigit(n, o) {
   return Number(String(n).charAt(o));

@@ -3,6 +3,10 @@
 let gameCanvas = document.getElementById("game");
 let arr = [];
 let currentShipType = 0;
+let shipType1 = 4;
+let shipType2 = 3;
+let shipType3 = 2
+let shipType4 = 1;
 let startPos = -1;
 let endPos = -1;
 let operator = 1;
@@ -56,6 +60,9 @@ function currentship(n) {
 }
 
 function clickedTile(n) {
+  if (true) {
+
+  }
   arr[n].element.style.borderColor = "red";
   if (startPos == -1) {
     startPos = n;
@@ -69,7 +76,21 @@ function clickedTile(n) {
     operator = -1;
   }
 
-  if (isLegalPlacement(0, 1) && operator == 1) {
+  if (startPos < 10 && endPos < 10 && operator == 1) {
+    for (let i = 0; i <= currentShipType; i++) {
+      changeTile(startPos + i);
+    }
+    posReset();
+  }
+
+  else if (startPos < 10 && endPos < 10 && operator == -1) {
+    for (let i = 0; i <= currentShipType; i++) {
+      changeTile(startPos + i * operator);
+    }
+    posReset();
+  }
+
+  else if (isLegalPlacement(0, 1) && operator == 1) {
     for (let i = 0; i <= currentShipType; i++) {
       changeTile(startPos + i);
     }
@@ -103,6 +124,23 @@ function clickedTile(n) {
   }
 
   operator = 1;
+  //lägg till funktion för att minska antalet kvarvarande båtar för respektive typ
+  switch (currentShipType) {
+    case 1:
+      shipType1--;
+      break;
+    case 2:
+      shipType2--;
+      break;
+    case 3:
+      shipType3--;
+      break;
+    case 4:
+      shipType4--;
+      break;
+    default:
+      break;
+  }
 }
 
 drawGame();

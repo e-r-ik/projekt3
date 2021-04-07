@@ -1,7 +1,9 @@
 "use strict";
 
 let gameCanvas = document.getElementById("game");
+let menu = document.getElementById("menu");
 let arr = [];
+let enemyArr = [];
 let currentShipType = 0;
 let shipType1 = 4;
 let shipType2 = 3;
@@ -17,6 +19,12 @@ class Tile {
     this.classattribute = classattribute;
     this.onclick = onclick;
     this.style = style;
+    this.isBoat = isBoat;
+  }
+}
+
+class enemyTile {
+  constructor(isBoat) {
     this.isBoat = isBoat;
   }
 }
@@ -47,6 +55,50 @@ function drawGame() {
     }
     o = 0;
     n++;
+  }
+}
+
+drawGame();
+
+function createEnemyPlayingField() {
+  if (shipType1 == 0 && shipType2 == 0 && shipType3 == 0 && shipType4 == 0) {
+    reset(0);
+    drawGame();
+    createEnemyShips();
+  }
+  else {
+    return;
+  }
+}
+
+function reset(totalReset) {
+  if (totalReset == 1) {
+    arr = [];
+    enemyArr = [];
+    shipType1 = 4;
+    shipType2 = 3;
+    shipType3 = 2;
+    shipType4 = 1;
+    direction = 1;
+  }
+  while(gameCanvas.childNodes[2]) {
+    gameCanvas.removeChild(gameCanvas.childNodes[2]);
+  }
+  posReset();
+}
+
+function clearField() {
+  reset(1);
+  drawGame();
+}
+
+function createEnemyShips() {
+  for (let i = 0; i < 100; i++) {
+    enemyArr[i] = new enemyTile(false);
+  }
+  
+  for (let i = 0; i < 4; i++) {
+    enemyArr[]
   }
 }
 
@@ -120,8 +172,6 @@ function clickedTile(n) {
 
   direction = 1;
 }
-
-drawGame();
 
 function drawShips() {
   if (startPos < 10 && endPos < 10) {

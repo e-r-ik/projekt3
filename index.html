@@ -11,7 +11,7 @@
 
     </header>
     <main id="game">
-      <div class="shipTypeContainer">
+      <div id="menu" class="shipTypeContainer">
 
         <div id="0" class="shipType">
           <p>1 square ships</p>
@@ -32,6 +32,10 @@
           <p>4 square ships</p>
           <img onclick="currentship(3)" src="square4.png" alt="picture of 4 square ships">
         </div>
+
+        <button type="button" onclick="createEnemyPlayingField()">Start game!</button>
+
+        <button type="button" onclick="clearField()">Reset!</button>
 
       </div>
     </main>

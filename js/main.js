@@ -2,16 +2,24 @@
 
 let gameCanvas = document.getElementById("game");
 let menu = document.getElementById("menu");
-let arr = [];
+let arr = [[],[],[],[],[],[],[],[],[],[]];
 let enemyArr = [];
 let currentShipType = 0;
 let shipType1 = 4;
 let shipType2 = 3;
 let shipType3 = 2
 let shipType4 = 1;
-let startPos = -1;
-let endPos = -1;
+let startPos = [-1, -1];
+let endPos = [-1, -1];
 let direction = 1;
+
+function showArr() {
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; i < 10; j++) {
+      console.log(arr[i][j]);
+    }
+  }
+}
 
 class Tile {
   constructor(element, classattribute, onclick, style, isBoat) {
@@ -30,31 +38,26 @@ class enemyTile {
 }
 
 function drawGame() {
-  let n = 2;
   let p = 0;
   for (let i = 0; i < 10; i++) {
-    let o = 2;
     for (let j = 0; j < 10; j++) {
-      arr[p] = new Tile(document.createElement("div"),
-                        document.createAttribute("class"),
-                        document.createAttribute("onclick"),
-                        document.createAttribute("style"),
-                        false);
+      arr[i][j] = new Tile(document.createElement("div"),
+                           document.createAttribute("class"),
+                           document.createAttribute("onclick"),
+                           document.createAttribute("style"),
+                           false);
 
-      arr[p].classattribute.value = "tileStyle";
-      arr[p].onclick.value = "clickedTile(" + p + ")";
-      arr[p].style.value = "grid-row-start: " + n + "; grid-column-start: " + o + ";"
+      arr[i][j].classattribute.value = "tileStyle";
+      arr[i][j].onclick.value = "clickedTile(" + i + ", " + j + ")";
+      arr[i][j].style.value = "grid-row-start: " + (i + 2) + "; grid-column-start: " + (j + 2) + ";"
 
-      gameCanvas.appendChild(arr[p].element);
+      gameCanvas.appendChild(arr[i][j].element);
 
-      arr[p].element.setAttributeNode(arr[p].classattribute);
-      arr[p].element.setAttributeNode(arr[p].onclick);
-      arr[p].element.setAttributeNode(arr[p].style);
-      o++;
+      arr[i][j].element.setAttributeNode(arr[i][j].classattribute);
+      arr[i][j].element.setAttributeNode(arr[i][j].onclick);
+      arr[i][j].element.setAttributeNode(arr[i][j].style);
       p++;
     }
-    o = 0;
-    n++;
   }
 }
 
@@ -93,13 +96,7 @@ function clearField() {
 }
 
 function createEnemyShips() {
-  for (let i = 0; i < 100; i++) {
-    enemyArr[i] = new enemyTile(false);
-  }
-  
-  for (let i = 0; i < 4; i++) {
-    enemyArr[]
-  }
+
 }
 
 function currentship(n) {
@@ -111,17 +108,17 @@ function currentship(n) {
   currentShipType = n;
 }
 
-function clickedTile(n) {
-  arr[n].element.style.borderColor = "red";
-  if (startPos == -1) {
-    startPos = n;
+function clickedTile(i, j) {
+  arr[i][j].element.style.borderColor = "red";
+  if (startPos[0] == -1) {
+    startPos[0] = i;
+    startPos[1] = j;
     return;
   }
-  endPos = n;
-  console.log(Number(String(startPos).charAt(0)), Number(String(endPos).charAt(0)),
-              Number(String(startPos).charAt(1)), Number(String(endPos).charAt(1)));
+  endPos[0] = i;
+  endPos[1] = j;
 
-  if (nthDigit(startPos, 1) > nthDigit(endPos, 1) || nthDigit(startPos, 0) > nthDigit(endPos, 0)) {
+  if (startPos[0] > endPos[0] || startPos[1] > endPos[1] ) {
     direction = -1;
   }
 
@@ -169,26 +166,19 @@ function clickedTile(n) {
     default:
       break;
   }
-
   direction = 1;
 }
 
 function drawShips() {
-  if (startPos < 10 && endPos < 10) {
+  if (isLegalPlacement(0, 1)) {
     for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i * direction);
-    }
-  }
-
-  else if (isLegalPlacement(0, 1)) {
-    for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i * direction);
+      changeTile(startPos + i * direction, startPos[1]);
     }
   }
 
   else if (isLegalPlacement(1, 0)) {
     for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i * 10 * direction);
+      changeTile(startPos[0], startPos + i * direction);
     }
   }
 
@@ -198,23 +188,20 @@ function drawShips() {
   posReset();
 }
 
-function nthDigit(n, o) {
-  return Number(String(n).charAt(o));
+function isLegalPlacement(i, j) {
+  return startPos[i] === endPos[i] && Math.abs(endPos[j] - startPos[j] === currentShipType);
 }
 
-function isLegalPlacement(n, o) {
-  return nthDigit(endPos, n) === nthDigit(startPos, n) &&
-         Math.abs(nthDigit(endPos, o) - nthDigit(startPos, o)) === currentShipType;
-}
-
-function changeTile(iteration) {
-  arr[iteration].isBoat = true;
-  arr[iteration].element.style.backgroundColor = "blue";
+function changeTile(i, j) {
+  arr[i][j].isBoat = true;
+  arr[i][j].element.style.backgroundColor = "blue";
 
   console.log("många trevligt");
 }
 
 function posReset() {
-  startPos = -1;
-  endPos = -1;
+  startPos[0] = -1;
+  startPos[1] = -1;
+  endPos[0] = -1;
+  endPos[1] = -1;
 }

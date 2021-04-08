@@ -2,8 +2,8 @@
 
 let gameCanvas = document.getElementById("game");
 let menu = document.getElementById("menu");
-let arr = [[],[],[],[],[],[],[],[],[],[]];
-let enemyArr = [];
+let arr = new Array(10);
+let enemyArr = new Array(10);
 let currentShipType = 0;
 let shipType1 = 4;
 let shipType2 = 3;
@@ -12,14 +12,7 @@ let shipType4 = 1;
 let startPos = [-1, -1];
 let endPos = [-1, -1];
 let direction = 1;
-
-function showArr() {
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; i < 10; j++) {
-      console.log(arr[i][j]);
-    }
-  }
-}
+let gamemode = 0;
 
 class Tile {
   constructor(element, classattribute, onclick, style, isBoat) {
@@ -36,6 +29,15 @@ class enemyTile {
     this.isBoat = isBoat;
   }
 }
+
+function buildArrays() {
+  for (let i = 0; i < 10; i++) {
+    arr[i] = new Array(10);
+    enemyArr[i] = new Array(10);
+  }
+}
+
+buildArrays();
 
 function drawGame() {
   let p = 0;
@@ -65,8 +67,6 @@ drawGame();
 
 function createEnemyPlayingField() {
   if (shipType1 == 0 && shipType2 == 0 && shipType3 == 0 && shipType4 == 0) {
-    reset(0);
-    drawGame();
     createEnemyShips();
   }
   else {
@@ -76,8 +76,9 @@ function createEnemyPlayingField() {
 
 function reset(totalReset) {
   if (totalReset == 1) {
-    arr = [];
-    enemyArr = [];
+    arr = new Array(10);
+    enemyArr = new Array(10);
+    gamemode = 0;
     shipType1 = 4;
     shipType2 = 3;
     shipType3 = 2;
@@ -92,11 +93,23 @@ function reset(totalReset) {
 
 function clearField() {
   reset(1);
+  buildArrays();
   drawGame();
 }
 
 function createEnemyShips() {
+  let shipDirection = Math.floor(Math.random * 2);
+  let rnd1, rnd2 = Math.floor(Math.random() * 10);
+  if (shipDirection == 0) {
+    for (let i = 0; i < 4; i++) {
+      if (enemyArr[rnd1][rnd2 + i * shipDirection] == ) {
 
+      }
+    }
+  }
+  else {
+
+  }
 }
 
 function currentship(n) {
@@ -109,76 +122,84 @@ function currentship(n) {
 }
 
 function clickedTile(i, j) {
-  arr[i][j].element.style.borderColor = "red";
-  if (startPos[0] == -1) {
-    startPos[0] = i;
-    startPos[1] = j;
-    return;
-  }
-  endPos[0] = i;
-  endPos[1] = j;
+  if (gamemode == 0) {
+    arr[i][j].element.style.borderColor = "red";
+    if (startPos[0] == -1) {
+      startPos[0] = i;
+      startPos[1] = j;
+      console.log(startPos);
+      return;
+    }
+    endPos[0] = i;
+    endPos[1] = j;
+    console.log(endPos);
 
-  if (startPos[0] > endPos[0] || startPos[1] > endPos[1] ) {
-    direction = -1;
-  }
+    if (startPos[0] > endPos[0] || startPos[1] > endPos[1] ) {
+      direction = -1;
+    }
 
-  switch (currentShipType) {
-    case 0:
-      if (shipType1 > 0) {
-        drawShips();
-        shipType1--;
-      }
-      else {
-        alert("Slut på denna skepptyp");
-        posReset();
-      }
+    switch (currentShipType) {
+      case 0:
+        if (shipType1 > 0) {
+          drawShips();
+          shipType1--;
+        }
+        else {
+          alert("Slut på denna skepptyp");
+          posReset();
+        }
+          break;
+      case 1:
+        if (shipType2 > 0) {
+          drawShips();
+          shipType2--;
+        }
+        else {
+          alert("Slut på denna skepptyp");
+          posReset();
+        }
         break;
-    case 1:
-      if (shipType2 > 0) {
-        drawShips();
-        shipType2--;
-      }
-      else {
-        alert("Slut på denna skepptyp");
-        posReset();
-      }
-      break;
-    case 2:
-      if (shipType3 > 0) {
-        drawShips();
-        shipType3--;
-      }
-      else {
-        alert("Slut på denna skepptyp");
-        posReset();
-      }
-      break;
-    case 3:
-      if (shipType4 > 0) {
-        drawShips();
-        shipType4--;
-      }
-      else {
-        alert("Slut på denna skepptyp");
-        posReset();
-      }
-      break;
-    default:
-      break;
+      case 2:
+        if (shipType3 > 0) {
+          drawShips();
+          shipType3--;
+        }
+        else {
+          alert("Slut på denna skepptyp");
+          posReset();
+        }
+        break;
+      case 3:
+        if (shipType4 > 0) {
+          drawShips();
+          shipType4--;
+        }
+        else {
+          alert("Slut på denna skepptyp");
+          posReset();
+        }
+        break;
+      default:
+        break;
+    }
+    posReset();
+    direction = 1;
   }
-  direction = 1;
+  else {
+
+  }
 }
 
 function drawShips() {
   if (isLegalPlacement(0, 1)) {
     for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos + i * direction, startPos[1]);
+      changeTile(startPos[0], startPos[1] + i * direction);
     }
   }
 
   else if (isLegalPlacement(1, 0)) {
     for (let i = 0; i <= currentShipType; i++) {
-      changeTile(startPos[0], startPos + i * direction);
+      changeTile(startPos[0] + i * direction, startPos[1]);
     }
   }
 
@@ -189,7 +210,18 @@ function drawShips() {
 }
 
 function isLegalPlacement(i, j) {
-  return startPos[i] === endPos[i] && Math.abs(endPos[j] - startPos[j] === currentShipType);
+  let alreadyOccupied = false;
+  if (startPos[i] === endPos[i] && Math.abs(endPos[j] - startPos[j]) === currentShipType) {
+    for (let k = 0; k < Math.abs(endPos[j] - startPos[j]); k++) {
+      if (arr[startPos[i]][startPos[j] + k * direction].isBoat == true) {
+        alreadyOccupied = true;
+      }
+    }
+    return alreadyOccupied == false;
+  }
+  else {
+    return false;
+  }
 }
 
 function changeTile(i, j) {

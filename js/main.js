@@ -99,16 +99,21 @@ function clearField() {
 
 function createEnemyShips() {
   let shipDirection = Math.floor(Math.random * 2);
-  let rnd1, rnd2 = Math.floor(Math.random() * 10);
+
   if (shipDirection == 0) {
     for (let i = 0; i < 4; i++) {
-      if (enemyArr[rnd1][rnd2 + i * shipDirection] == ) {
-
+      let rnd1, rnd2 = Math.floor(Math.random() * 10);
+      if (enemyArr[rnd1][rnd2 + i * shipDirection] == undefined) {
+        rnd1, rnd2 = Math.floor(Math.random() * 10);
       }
     }
   }
   else {
-
+    for (let i = 0; i < 4; i++) {
+      if (enemyArr[rnd1 + i * shipDirection][rnd2] == undefined) {
+        rnd1, rnd2 = Math.floor(Math.random() * 10);
+      }
+    }
   }
 }
 

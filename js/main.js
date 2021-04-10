@@ -97,22 +97,30 @@ function clearField() {
   drawGame();
 }
 
+function returnRnd(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 function createEnemyShips() {
-  let shipDirection = Math.floor(Math.random * 2);
+  let shipDirection = returnRnd(0, 1);
+  let shipDirection2 = 1;
+  let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)]
+  let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)]
 
   if (shipDirection == 0) {
-    for (let i = 0; i < 4; i++) {
-      let rnd1, rnd2 = Math.floor(Math.random() * 10);
-      if (enemyArr[rnd1][rnd2 + i * shipDirection] == undefined) {
-        rnd1, rnd2 = Math.floor(Math.random() * 10);
-      }
-    }
+    shipDirection2 = -1;
   }
-  else {
-    for (let i = 0; i < 4; i++) {
-      if (enemyArr[rnd1 + i * shipDirection][rnd2] == undefined) {
-        rnd1, rnd2 = Math.floor(Math.random() * 10);
-      }
+
+  for (let i = 0; i < 4; i++) {
+    if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
+        startPosEnemyShip[1] + 3 * shipDirection2 == endPosEnemyShip[1] &&
+        enemyArr[startPos[1] + i * shipDirection2][startPosEnemyShip[1]].isBoat == false) {
+
+    }
+    else if (shipDirection == 1 && startPosEnemyShip[1] == endPosEnemyShip[1] &&
+             startPosEnemyShip[0] + 3 * shipDirection2 == endPosEnemyShip[1] &&
+             enemyArr[startPosEnemyShip[1]][startPos[1] + i * shipDirection2].isBoat == false) {
+      enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + i * shipDirection2].isBoat = true;
     }
   }
 }

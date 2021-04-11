@@ -5,10 +5,7 @@ let menu = document.getElementById("menu");
 let arr = new Array(10);
 let enemyArr = new Array(10);
 let currentShipType = 0;
-let shipType1 = 4;
-let shipType2 = 3;
-let shipType3 = 2
-let shipType4 = 1;
+let shipTypes = [4, 3, 2, 1];
 let startPos = [-1, -1];
 let endPos = [-1, -1];
 let direction = 1;
@@ -65,11 +62,20 @@ function drawGame() {
 
 drawGame();
 
+function fillEnemyArray() {
+  for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
+      enemyArr[i][j] = new enemyTile(false);
+    }
+  }
+}
+
 function createEnemyPlayingField() {
-  if (shipType1 == 0 && shipType2 == 0 && shipType3 == 0 && shipType4 == 0) {
+  if (shipTypes[0] == 0 && shipTypes[1] == 0 && shipTypes[2] == 0 && shipTypes[3] == 0) {
     createEnemyShips();
   }
   else {
+    alert("You need to use all your ships before starting to play!");
     return;
   }
 }
@@ -79,10 +85,10 @@ function reset(totalReset) {
     arr = new Array(10);
     enemyArr = new Array(10);
     gamemode = 0;
-    shipType1 = 4;
-    shipType2 = 3;
-    shipType3 = 2;
-    shipType4 = 1;
+    shipTypes[0] = 4;
+    shipTypes[1] = 3;
+    shipTypes[2] = 2;
+    shipTypes[3] = 1;
     direction = 1;
   }
   while(gameCanvas.childNodes[2]) {
@@ -103,24 +109,84 @@ function returnRnd(min, max) {
 
 function createEnemyShips() {
   let shipDirection = returnRnd(0, 1);
-  let shipDirection2 = 1;
-  let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)]
-  let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)]
-
-  if (shipDirection == 0) {
-    shipDirection2 = -1;
-  }
+  let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+  let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
 
   for (let i = 0; i < 4; i++) {
     if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
-        startPosEnemyShip[1] + 3 * shipDirection2 == endPosEnemyShip[1] &&
-        enemyArr[startPos[1] + i * shipDirection2][startPosEnemyShip[1]].isBoat == false) {
-
+        startPosEnemyShip[1] + 3 == endPosEnemyShip[1] &&
+        enemyArr[startPos[1] + i][startPosEnemyShip[1]].isBoat == false) {
+          enemyArr[startPos[1] + i][startPosEnemyShip[1]].isBoat = true;
     }
     else if (shipDirection == 1 && startPosEnemyShip[1] == endPosEnemyShip[1] &&
-             startPosEnemyShip[0] + 3 * shipDirection2 == endPosEnemyShip[1] &&
-             enemyArr[startPosEnemyShip[1]][startPos[1] + i * shipDirection2].isBoat == false) {
-      enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + i * shipDirection2].isBoat = true;
+             startPosEnemyShip[0] + 3 == endPosEnemyShip[1] &&
+             enemyArr[startPosEnemyShip[1]][startPos[1] + i].isBoat == false) {
+      enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + i].isBoat = true;
+    }
+  }
+
+  for (let i = 0; i < 2; i++) {
+    let shipDirection = returnRnd(0, 1);
+    let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+    let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+
+    for (let j = 0; j < 2; j++) {
+      if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
+          startPosEnemyShip[1] + 2 == endPosEnemyShip[1] &&
+          enemyArr[startPos[1] + j][startPosEnemyShip[1]].isBoat == false) {
+            enemyArr[startPos[1] + j][startPosEnemyShip[1]].isBoat = true;
+      }
+      else if (shipDirection == 1 && startPosEnemyShip[1] == endPosEnemyShip[1] &&
+               startPosEnemyShip[0] + 2 == endPosEnemyShip[1] &&
+               enemyArr[startPosEnemyShip[1]][startPos[1] + j].isBoat == false) {
+        enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + j].isBoat = true;
+      }
+      else if (j > 0) {
+        j = 1;
+      }
+      else {
+        j = 0;
+      }
+    }
+  }
+
+  for (let i = 0; i < 3; i++) {
+    let shipDirection = returnRnd(0, 1);
+    let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+    let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+
+    for (let j = 0; j < 3; j++) {
+      if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
+          startPosEnemyShip[1] + 1 == endPosEnemyShip[1] &&
+          enemyArr[startPos[1] + j][startPosEnemyShip[1]].isBoat == false) {
+            enemyArr[startPos[1] + j][startPosEnemyShip[1]].isBoat = true;
+      }
+      else if (shipDirection == 1 && startPosEnemyShip[1] == endPosEnemyShip[1] &&
+               startPosEnemyShip[0] + 1 == endPosEnemyShip[1] &&
+               enemyArr[startPosEnemyShip[1]][startPos[1] + j].isBoat == false) {
+        enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + j].isBoat = true;
+      }
+      else if (j > 1) {
+        j = 2;
+      }
+      else if (j > 0) {
+        j = 1;
+      }
+      else {
+        j = 0;
+      }
+    }
+  }
+
+  for (let i = 0; i < 4; i++) {
+    let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+    let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+
+    if (enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1]].isBoat == false) {
+      enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1]].isBoat == true;
+    }
+    else {
+      i--;
     }
   }
 }
@@ -153,9 +219,8 @@ function clickedTile(i, j) {
 
     switch (currentShipType) {
       case 0:
-        if (shipType1 > 0) {
-          drawShips();
-          shipType1--;
+        if (shipTypes[0] > 0) {
+          drawShips(0);
         }
         else {
           alert("Slut på denna skepptyp");
@@ -163,9 +228,8 @@ function clickedTile(i, j) {
         }
           break;
       case 1:
-        if (shipType2 > 0) {
-          drawShips();
-          shipType2--;
+        if (shipTypes[1] > 0) {
+          drawShips(1);
         }
         else {
           alert("Slut på denna skepptyp");
@@ -173,9 +237,8 @@ function clickedTile(i, j) {
         }
         break;
       case 2:
-        if (shipType3 > 0) {
-          drawShips();
-          shipType3--;
+        if (shipTypes[2] > 0) {
+          drawShips(2);
         }
         else {
           alert("Slut på denna skepptyp");
@@ -183,9 +246,8 @@ function clickedTile(i, j) {
         }
         break;
       case 3:
-        if (shipType4 > 0) {
-          drawShips();
-          shipType4--;
+        if (shipTypes[3] > 0) {
+          drawShips(3);
         }
         else {
           alert("Slut på denna skepptyp");
@@ -198,22 +260,21 @@ function clickedTile(i, j) {
     posReset();
     direction = 1;
   }
-  else {
-
-  }
 }
 
-function drawShips() {
+function drawShips(n) {
   if (isLegalPlacement(0, 1)) {
     for (let i = 0; i <= currentShipType; i++) {
       changeTile(startPos[0], startPos[1] + i * direction);
     }
+    shipTypes[n]--;
   }
 
   else if (isLegalPlacement(1, 0)) {
     for (let i = 0; i <= currentShipType; i++) {
       changeTile(startPos[0] + i * direction, startPos[1]);
     }
+    shipTypes[n]--;
   }
 
   else {

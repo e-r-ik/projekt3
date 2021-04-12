@@ -122,13 +122,17 @@ function createEnemyShips() {
 
     if (startPosEnemyShip[0] == endPosEnemyShip[0] &&
         startPosEnemyShip[1] + 3 == endPosEnemyShip[1] &&
-        enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat == false) {
+        enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat == false ||
+        enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i] != undefined) {
       enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat = true;
+      points--;
     }
     else if (startPosEnemyShip[1] == endPosEnemyShip[1] &&
              startPosEnemyShip[0] + 3 == endPosEnemyShip[0] &&
-             enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat == false) {
+             enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat == false ||
+             enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]] != undefined) {
       enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat = true;
+      points--;
     }
     else {
       i--;
@@ -143,13 +147,17 @@ function createEnemyShips() {
 
       if (startPosEnemyShip[0] == endPosEnemyShip[0] &&
           startPosEnemyShip[1] + 2 == endPosEnemyShip[1] &&
-          enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat == false) {
+          enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat == false ||
+          enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i] != undefined) {
         enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat = true;
+        points--;
       }
       else if (startPosEnemyShip[1] == endPosEnemyShip[1] &&
                startPosEnemyShip[0] + 2 == endPosEnemyShip[1] &&
-               enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat == false) {
+               enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat == false ||
+               enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]] != undefined) {
         enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat = true;
+        points--;
       }
       else {
         j--;
@@ -164,15 +172,18 @@ function createEnemyShips() {
 
       if (startPosEnemyShip[0] == endPosEnemyShip[0] &&
           startPosEnemyShip[1] + 1 == endPosEnemyShip[1] &&
-          startPosEnemyShip[1] + 1 < 10 &&
-          enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat == false) {
+          enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat == false ||
+          enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i] != undefined) {
         enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat = true;
+        points--;
       }
       else if (startPosEnemyShip[1] == endPosEnemyShip[1] &&
                startPosEnemyShip[0] + 1 == endPosEnemyShip[1] &&
                startPosEnemyShip[0] + 1 < 10 &&
-               enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat == false) {
+               enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat == false ||
+               enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]] != undefined) {
         enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat = true;
+        points--;
       }
       else {
         j--;
@@ -185,6 +196,7 @@ function createEnemyShips() {
 
     if (enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1]].isBoat == false) {
       enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1]].isBoat = true;
+      points--;
     }
     else {
       i--;

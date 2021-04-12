@@ -10,6 +10,8 @@ let startPos = [-1, -1];
 let endPos = [-1, -1];
 let direction = 1;
 let gamemode = 0;
+let points = 21;
+let pointsEnemy = 20;
 
 class Tile {
   constructor(element, classattribute, onclick, style, isBoat) {
@@ -75,6 +77,7 @@ fillEnemyArray();
 function createEnemyPlayingField() {
   if (shipTypes[0] == 0 && shipTypes[1] == 0 && shipTypes[2] == 0 && shipTypes[3] == 0) {
     createEnemyShips();
+    gamemode = 1;
   }
   else {
     alert("You need to use all your ships before starting to play!");
@@ -106,61 +109,73 @@ function clearField() {
 }
 
 function returnRnd(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
+  return Math.round(Math.random() * (max - min) + min);
 }
 
 function createEnemyShips() {
-  let shipDirection = returnRnd(0, 1);
   let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
   let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
 
   for (let i = 0; i < 4; i++) {
-    if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
+    startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+    endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+
+    if (startPosEnemyShip[0] == endPosEnemyShip[0] &&
         startPosEnemyShip[1] + 3 == endPosEnemyShip[1] &&
-        enemyArr[startPos[1] + i][startPosEnemyShip[1]].isBoat == false) {
-      enemyArr[startPos[1] + i][startPosEnemyShip[1]].isBoat = true;
+        enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat == false) {
+      enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat = true;
     }
-    else if (shipDirection == 1 && startPosEnemyShip[1] == endPosEnemyShip[1] &&
-             startPosEnemyShip[0] + 3 == endPosEnemyShip[1] &&
-             enemyArr[startPosEnemyShip[1]][startPos[1] + i].isBoat == false) {
-      enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + i].isBoat = true;
+    else if (startPosEnemyShip[1] == endPosEnemyShip[1] &&
+             startPosEnemyShip[0] + 3 == endPosEnemyShip[0] &&
+             enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat == false) {
+      enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat = true;
+    }
+    else {
+      i--;
     }
   }
 
   for (let i = 0; i < 2; i++) {
-    shipDirection = returnRnd(0, 1);
-    startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
-    endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
 
     for (let j = 0; j < 2; j++) {
-      if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
+      startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+      endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+
+      if (startPosEnemyShip[0] == endPosEnemyShip[0] &&
           startPosEnemyShip[1] + 2 == endPosEnemyShip[1] &&
-          enemyArr[startPos[1] + j][startPosEnemyShip[1]].isBoat == false) {
-            enemyArr[startPos[1] + j][startPosEnemyShip[1]].isBoat = true;
+          enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat == false) {
+        enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat = true;
       }
-      else if (shipDirection == 1 && startPosEnemyShip[1] == endPosEnemyShip[1] &&
+      else if (startPosEnemyShip[1] == endPosEnemyShip[1] &&
                startPosEnemyShip[0] + 2 == endPosEnemyShip[1] &&
-               enemyArr[startPosEnemyShip[1]][startPos[1] + j].isBoat == false) {
-        enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + j].isBoat = true;
+               enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat == false) {
+        enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat = true;
+      }
+      else {
+        j--;
       }
     }
   }
 
   for (let i = 0; i < 3; i++) {
-    shipDirection = returnRnd(0, 1);
-    startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
-    endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
-
     for (let j = 0; j < 3; j++) {
-      if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
+      startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+      endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+
+      if (startPosEnemyShip[0] == endPosEnemyShip[0] &&
           startPosEnemyShip[1] + 1 == endPosEnemyShip[1] &&
-          enemyArr[startPos[1] + j][startPosEnemyShip[1]].isBoat == false) {
-            enemyArr[startPos[1] + j][startPosEnemyShip[1]].isBoat = true;
+          startPosEnemyShip[1] + 1 < 10 &&
+          enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat == false) {
+        enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1] + i].isBoat = true;
       }
-      else if (shipDirection == 1 && startPosEnemyShip[1] == endPosEnemyShip[1] &&
+      else if (startPosEnemyShip[1] == endPosEnemyShip[1] &&
                startPosEnemyShip[0] + 1 == endPosEnemyShip[1] &&
-               enemyArr[startPosEnemyShip[1]][startPos[1] + j].isBoat == false) {
-        enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + j].isBoat = true;
+               startPosEnemyShip[0] + 1 < 10 &&
+               enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat == false) {
+        enemyArr[startPosEnemyShip[0] + i][startPosEnemyShip[1]].isBoat = true;
+      }
+      else {
+        j--;
       }
     }
   }
@@ -245,6 +260,33 @@ function clickedTile(i, j) {
     }
     posReset();
     direction = 1;
+  }
+  else {
+    if (enemyArr[i][j].isBoat == true) {
+      enemyArr[i][j].isBoat = false;
+      points--;
+      alert("You hit an enemy ship! Only " + points + " tiles to go!")
+    }
+    else {
+      alert("You missed your shot! Now the AI will take theirs.")
+    }
+    let tempY = returnRnd(0, 9);
+    let tempX = returnRnd(0, 9);
+    if (arr[tempY][tempX].isBoat == true) {
+      pointsEnemy--;
+      arr[tempY][tempX].isBoat = false;
+      arr[tempY][tempX].element.style.background = "black";
+      alert("The AI hit you!");
+    }
+    else {
+      alert("The AI Missed! Your turn!")
+    }
+    if (points == 0) {
+      alert("Congratulations you won!")
+    }
+    else if (pointsEnemy == 0) {
+      alert("The enemy won!")
+    }
   }
 }
 

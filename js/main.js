@@ -64,11 +64,13 @@ drawGame();
 
 function fillEnemyArray() {
   for (let i = 0; i < 10; i++) {
-    for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
       enemyArr[i][j] = new enemyTile(false);
     }
   }
 }
+
+fillEnemyArray();
 
 function createEnemyPlayingField() {
   if (shipTypes[0] == 0 && shipTypes[1] == 0 && shipTypes[2] == 0 && shipTypes[3] == 0) {
@@ -104,7 +106,7 @@ function clearField() {
 }
 
 function returnRnd(min, max) {
-  return Math.random() * (max - min) + min;
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
 function createEnemyShips() {
@@ -116,7 +118,7 @@ function createEnemyShips() {
     if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
         startPosEnemyShip[1] + 3 == endPosEnemyShip[1] &&
         enemyArr[startPos[1] + i][startPosEnemyShip[1]].isBoat == false) {
-          enemyArr[startPos[1] + i][startPosEnemyShip[1]].isBoat = true;
+      enemyArr[startPos[1] + i][startPosEnemyShip[1]].isBoat = true;
     }
     else if (shipDirection == 1 && startPosEnemyShip[1] == endPosEnemyShip[1] &&
              startPosEnemyShip[0] + 3 == endPosEnemyShip[1] &&
@@ -126,9 +128,9 @@ function createEnemyShips() {
   }
 
   for (let i = 0; i < 2; i++) {
-    let shipDirection = returnRnd(0, 1);
-    let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
-    let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+    shipDirection = returnRnd(0, 1);
+    startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+    endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
 
     for (let j = 0; j < 2; j++) {
       if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
@@ -141,19 +143,13 @@ function createEnemyShips() {
                enemyArr[startPosEnemyShip[1]][startPos[1] + j].isBoat == false) {
         enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + j].isBoat = true;
       }
-      else if (j > 0) {
-        j = 1;
-      }
-      else {
-        j = 0;
-      }
     }
   }
 
   for (let i = 0; i < 3; i++) {
-    let shipDirection = returnRnd(0, 1);
-    let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
-    let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+    shipDirection = returnRnd(0, 1);
+    startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+    endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
 
     for (let j = 0; j < 3; j++) {
       if (shipDirection == 0 && startPosEnemyShip[0] == endPosEnemyShip[0] &&
@@ -166,24 +162,14 @@ function createEnemyShips() {
                enemyArr[startPosEnemyShip[1]][startPos[1] + j].isBoat == false) {
         enemyArr[startPosEnemyShip[1][startPosEnemyShip[0]] + j].isBoat = true;
       }
-      else if (j > 1) {
-        j = 2;
-      }
-      else if (j > 0) {
-        j = 1;
-      }
-      else {
-        j = 0;
-      }
     }
   }
 
   for (let i = 0; i < 4; i++) {
-    let startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
-    let endPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
+    startPosEnemyShip = [returnRnd(0, 9), returnRnd(0, 9)];
 
     if (enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1]].isBoat == false) {
-      enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1]].isBoat == true;
+      enemyArr[startPosEnemyShip[0]][startPosEnemyShip[1]].isBoat = true;
     }
     else {
       i--;
